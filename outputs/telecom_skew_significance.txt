@@ -1,0 +1,16 @@
+PER-OPTION SKEW SIGNIFICANCE TEST
+==================================================
+
+Human baseline file : C:\Users\summer.intern12\Downloads\digital_twin_consumer_pipeline\data\raw\real_telecom_survey.csv (n=7043)
+Agent results file  : C:\Users\summer.intern12\Downloads\digital_twin_consumer_pipeline\outputs\calibrated_experiment_results.csv (n=148)
+
+Option         Human P  Expected  Observed   Rel. diff
+Option A        0.5502      81.4        19      -76.7%
+Option B        0.2091      31.0        91      194.0%
+Option C        0.2407      35.6        38        6.7%
+
+Chi-square statistic : 164.506
+Degrees of freedom   : 2
+p-value              : < 0.0001
+
+VERDICT: REJECT H0 (p=< 0.0001 < 0.05): the agent's choice distribution differs significantly from the human baseline. The per-option skew is unlikely to be sampling noise.

@@ -1,0 +1,2 @@
+model,kl_component,lbe_component,nudge_component,rag_component,composite_score,meets_90pct,elo_proxy
+llama3,0.55,0.811,0.184,0.711,0.571,False,1150

@@ -1,0 +1,20 @@
+=== TELECOM ALIGNMENT REPORT (verified, no fallback data) ===
+
+Human baseline file : C:\Users\summer.intern12\Downloads\digital_twin_consumer_pipeline\real_telecom_survey.csv
+Human baseline rows : 7043
+Agent results file  : C:\Users\summer.intern12\Downloads\digital_twin_consumer_pipeline\outputs\calibrated_experiment_results.csv
+Agent total trials  : 150
+Agent successful    : 148 (98.7%)
+
+Distribution comparison:
+Option              Human P     Agent Q
+Option A             0.5502      0.1284
+Option B             0.2091      0.6149
+Option C             0.2407      0.2568
+
+Jensen-Shannon Divergence : 0.1773
+Fidelity Rating           : 82.27%
+Uncalibrated JSD          : not measured (no baseline_results.csv found)
+
+Every number above is computed directly from the files listed.
+No hardcoded or fallback values were used in this report.

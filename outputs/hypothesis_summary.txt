@@ -1,0 +1,10 @@
+HYPOTHESIS RESULTS SUMMARY
+Generated from: outputs\experiment_results.csv
+Models tested: ['llama3']
+Total trials: 90 | Success rate: 100.0%
+
+Composite Alignment Scores:
+ model  composite_score  meets_90pct  elo_proxy
+llama3            0.571        False       1150
+
+Key finding: No model achieves 90% yet — consider pulling larger models (llama3.1:70b)

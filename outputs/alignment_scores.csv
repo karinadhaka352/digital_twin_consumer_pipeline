@@ -1,0 +1,13 @@
+model,nudge,metric,value,interpretation,hypothesis,synthetic_shift_pp,human_shift_pp,rag
+llama3,none,KL_divergence,0.011,lower=better,H1,,,
+llama3,authority,KL_divergence,0.0491,lower=better,H1,,,
+llama3,social_proof,KL_divergence,0.0491,lower=better,H1,,,
+llama3,best_seller,KL_divergence,0.0038,lower=better,H1,,,
+llama3,financial,KL_divergence,0.0904,lower=better,H1,,,
+llama3,all,LBE_index,0.8114,higher=better,H2,,,
+llama3,authority,nudge_gap_pp,18.22,lower=more human-like,H3,22.22,4.0,
+llama3,social_proof,nudge_gap_pp,18.22,lower=more human-like,H3,22.22,4.0,
+llama3,best_seller,nudge_gap_pp,6.11,lower=more human-like,H3,11.11,5.0,
+llama3,financial,nudge_gap_pp,18.78,lower=more human-like,H3,27.78,9.0,
+llama3,all,rag_alignment,0.7111,higher=better,H4,,,with_rag
+llama3,all,rag_alignment,0.8,higher=better,H4,,,no_rag
