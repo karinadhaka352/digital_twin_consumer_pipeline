@@ -2,10 +2,16 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 
-def extract_clean_construct_correlations():
-    print("\n=== Automated Meta-Row Extraction Engine ===")
+def extract_and_save_meta_rows():
+    print("\n=== Automated Meta-Row Extraction & Storage Engine ===")
     ROOT_DIR = Path(__file__).parent.parent
-    data_file = ROOT_DIR / "data" / "meta_analysis" / "raw_data" / "AI Chatbot Affordances and Purchase Intention Dataset.xlsx"
+    
+    # Input path
+    file_name = "AI Chatbot Affordances and Purchase Intention Dataset.xlsx"
+    data_file = ROOT_DIR / "data" / "meta_analysis" / "raw_data" / file_name
+    
+    # Output path for permanent storage
+    output_file = ROOT_DIR / "outputs" / "extracted_meta_study_records.csv"
     
     if not data_file.exists():
         print(f"[ERROR] Cannot find dataset at {data_file}")
@@ -14,32 +20,20 @@ def extract_clean_construct_correlations():
     # Ingest raw data
     df = pd.read_excel(data_file)
     n_subjects = len(df)
-    
-    # Calculate the comprehensive raw correlation matrix
     corr_matrix = df.corr(numeric_only=True)
     
-    # Group item lists by their construct prefix tags
-    ca_cols = [c for c in df.columns if c.startswith("CA")]
-    ce_cols = [c for c in df.columns if c.startswith("CE")]
-    ct_cols = [c for c in df.columns if c.startswith("CT")]
-    cs_cols = [c for c in df.columns if c.startswith("CS")]
-    pi_cols = [c for c in df.columns if c.startswith("PI")]
-    
+    # Define construct groups
     constructs = {
-        "Chatbot Affordance": ca_cols,
-        "Customer Engagement": ce_cols,
-        "Customer Trust": ct_cols,
-        "Customer Satisfaction": cs_cols,
-        "Purchase Intention": pi_cols
+        "Chatbot Affordance": [c for c in df.columns if c.startswith("CA")],
+        "Customer Engagement": [c for c in df.columns if c.startswith("CE")],
+        "Customer Trust": [c for c in df.columns if c.startswith("CT")],
+        "Customer Satisfaction": [c for c in df.columns if c.startswith("CS")],
+        "Purchase Intention": [c for c in df.columns if c.startswith("PI")]
     }
     
-    print(f"Processing data for N = {n_subjects} participants across identified construct blocks...")
-    print("\n" + "="*70)
-    print(f"{'Construct 1':<22} | {'Construct 2':<22} | {'Pooled r':<10}")
-    print("="*70)
-    
-    # Extract the average correlation between different construct families
+    extracted_records = []
     keys = list(constructs.keys())
+    
     for i in range(len(keys)):
         for j in range(i + 1, len(keys)):
             c1_name, c1_list = keys[i], constructs[keys[i]]
@@ -48,15 +42,33 @@ def extract_clean_construct_correlations():
             if not c1_list or not c2_list:
                 continue
                 
-            # Extract the subset correlation matrix between the two blocks
             sub_corr = corr_matrix.loc[c1_list, c2_list].values
             
-            # Use Fisher's Z transformation to average the correlations safely
+            # Fisher's Z transformation to pool correlation coefficients safely
             z_values = 0.5 * np.log((1 + sub_corr) / (1 - sub_corr))
             avg_z = np.mean(z_values)
             avg_r = (np.exp(2 * avg_z) - 1) / (np.exp(2 * avg_z) + 1)
             
-            print(f"{c1_name:<22} | {c2_name:<22} | {avg_r:.3f}")
+            # Save record structure
+            extracted_records.append({
+                "Study_Source": file_name,
+                "Construct_1": c1_name,
+                "Construct_2": c2_name,
+                "Correlation_r": round(avg_r, 4),
+                "Sample_Size_n": n_subjects
+            })
             
+    # Convert list to DataFrame
+    output_df = pd.DataFrame(extracted_records)
+    
+    # Save to your hard drive permanently
+    output_df.to_csv(output_file, index=False)
+    print(f"\n[SUCCESS] Extracted 10 macro-relationships from raw data.")
+    print(f"[STORED PERMANENTLY AT]: {output_file}")
+    
+    # Print preview matrix on screen
+    print("\nPreview of saved database rows:")
+    print(output_df.head(4))
+
 if __name__ == "__main__":
-    extract_clean_construct_correlations()
+    extract_and_save_meta_rows()
