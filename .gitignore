@@ -1,1 +1,6 @@
-data/meta_analysis/raw_data/
+data/
+.env
+.env.local
+.env.example
+__pycache__/
+*.pyc
